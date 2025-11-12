@@ -1,0 +1,47 @@
+# Step 1: Import libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Step 2: Load dataset
+df = sns.load_dataset('titanic')
+
+# Quick look at the dataset
+print(df.head())
+print(df.info())
+
+# Step 3: Explore survival by Sex, Age, and Pclass
+# Survival counts by Sex
+print(df.groupby('sex')['survived'].value_counts(normalize=True))
+
+# Survival rate by Pclass
+print(df.groupby('pclass')['survived'].mean())
+
+# Survival rate by Sex and Pclass
+print(df.groupby(['sex','pclass'])['survived'].mean())
+
+# Step 4: Visualizations
+
+# 4a: Bar plot - Survival by Sex
+sns.countplot(x='sex', hue='survived', data=df)
+plt.title("Survival Counts by Sex")
+plt.show()
+
+# 4b: Boxplot - Age distribution by Survival
+sns.boxplot(x='survived', y='age', data=df)
+plt.title("Age Distribution by Survival")
+plt.show()
+
+# 4c: Histogram - Age distribution
+sns.histplot(df['age'], bins=20, kde=True)
+plt.title("Histogram of Age")
+plt.show()
+
+# 4d: Scatter plot - Age vs Fare colored by Survival
+sns.scatterplot(x='age', y='fare', hue='survived', data=df)
+plt.title("Age vs Fare by Survival")
+plt.show()
+
+# 4e: Pair plot - Age, Fare, Survival
+sns.pairplot(df[['age','fare','survived']], hue='survived')
+plt.show()
